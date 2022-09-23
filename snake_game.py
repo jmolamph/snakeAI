@@ -30,7 +30,8 @@ class SnakeGame:
         self.food = None
 
         # misc attributes
-        self.FONT_STYLE = None
+        self.PROMPT_FONT = None
+        self.SCORE_FONT = None
         self.FONT_SIZE = 30
         self.SCREEN = None
 
@@ -40,7 +41,8 @@ class SnakeGame:
         """
         # set up the game, and save the screen
         self.SCREEN = self.setup_screen()
-        self.FONT_STYLE = pygame.font.SysFont('Calibri', self.FONT_SIZE)
+        self.PROMPT_FONT = pygame.font.SysFont('Calibri', self.FONT_SIZE)
+        self.SCORE_FONT = pygame.font.SysFont('Calibri', self.FONT_SIZE)
         self.gameplay_loop()
 
     def setup_screen(self):
@@ -66,8 +68,12 @@ class SnakeGame:
         return screen
 
     def display_message(self, message, text_color, position):
-        msg = self.FONT_STYLE.render(message, True, text_color)
+        msg = self.PROMPT_FONT.render(message, True, text_color)
         self.SCREEN.blit(msg, [self.SCREEN_WIDTH / 4, (self.SCREEN_HEIGHT / 4) + (position * self.FONT_SIZE)])
+
+    def show_score(self):
+        value = self.SCORE_FONT.render("Your Score: {}".format(self.snake.get_length()-1), True, self.WIN_COLOR)
+        self.SCREEN.blit(value, [0, 0])
 
     def create_food(self):
         self.food = food.Food(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.SNAKE_BLOCK_SIZE)
@@ -156,9 +162,12 @@ class SnakeGame:
                              [self.snake.get_x(), self.snake.get_y(), self.SNAKE_BLOCK_SIZE, self.SNAKE_BLOCK_SIZE])
             pygame.draw.rect(self.SCREEN, self.FOOD_COLOR,
                              [self.food.get_x(), self.food.get_y(), self.SNAKE_BLOCK_SIZE, self.SNAKE_BLOCK_SIZE])
+
+            self.show_score()
             pygame.display.update()
 
             if self.food.get_x() == self.snake.get_x() and self.food.get_y() == self.snake.get_y():
+                self.snake.update_length()
                 print("I ate some food!")
 
             clock.tick(self.SNAKE_SPEED)
