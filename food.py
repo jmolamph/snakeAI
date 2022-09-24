@@ -1,3 +1,5 @@
+# james molamphy jmolamph
+
 import random
 
 
@@ -15,8 +17,8 @@ class Food:
         """
         updates the X and Y coordinates to a random position on the board
         """
-        self._X = round(random.randrange(0, self._width - self._block) / 10.0) * 10.0
-        self._Y = round(random.randrange(0, self._height - self._block) / 10.0) * 10.0
+        self._X = round(random.randrange(0, self._width - self._block) / float(self._block)) * float(self._block)
+        self._Y = round(random.randrange(0, self._height - self._block) / float(self._block)) * float(self._block)
 
     def get_x(self):
         return self._X
