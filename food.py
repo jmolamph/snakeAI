@@ -5,15 +5,18 @@ class Food:
     def __init__(self, width, height, block):
         self._X = None
         self._Y = None
-        self.width = width
-        self.height = height
-        self.block = block
+        self._width = width
+        self._height = height
+        self._block = block
 
         self.spawn()
 
     def spawn(self):
-        self._X = round(random.randrange(0, self.width - self.block) / 10.0) * 10.0
-        self._Y = round(random.randrange(0, self.height - self.block) / 10.0) * 10.0
+        """
+        updates the X and Y coordinates to a random position on the board
+        """
+        self._X = round(random.randrange(0, self._width - self._block) / 10.0) * 10.0
+        self._Y = round(random.randrange(0, self._height - self._block) / 10.0) * 10.0
 
     def get_x(self):
         return self._X
